@@ -1,0 +1,56 @@
+{
+  "manifest_version": 2,
+  "id": "media_desk",
+  "name": "内容工作台",
+  "description": "一句话记灵感，用工作台模型一键生成口播脚本、标题和六格分镜，左聊右改，拖到日历排期，发布后回填数据复盘；可选接入图像接口画封面和分镜",
+  "version": "0.1.0",
+  "api": ">=2.0.0 <3.0.0",
+  "pmw": ">=0.3.0 <1.0.0",
+  "license": "MIT",
+  "homepage": "https://github.com/lizhao903/pmw-plugin-media_desk",
+  "repository": "https://github.com/lizhao903/pmw-plugin-media_desk",
+  "publisher": {
+    "id": "github:lizhao903"
+  },
+  "icon": "assets/icon.svg",
+  "provides": {
+    "modules": [
+      "media_desk"
+    ],
+    "settings": [
+      "media_desk"
+    ],
+    "today_cards": [
+      "media_desk_today"
+    ]
+  },
+  "permissions": [
+    "agent:run",
+    "secrets:media_desk",
+    "network:any"
+  ],
+  "permissions_reason": {
+    "agent:run": "用工作台配置的模型生成脚本、标题、分镜、改稿和提炼风格（会把灵感和稿件内容发给模型服务商）",
+    "secrets:media_desk": "加密保存你填写的图像接口 Key，仅本插件可读写",
+    "network:any": "可选生图：访问你在设置里填写的 OpenAI 兼容图像接口，地址不固定，不授权时文字功能照常可用"
+  },
+  "runtime": {
+    "backend": {
+      "kind": "process",
+      "protocol": "pmw-plugin-rpc/1",
+      "entry": {
+        "darwin-arm64": "bin/media_desk-darwin-arm64",
+        "linux-amd64": "bin/media_desk-linux-amd64",
+        "windows-amd64": "bin/media_desk-windows-amd64.exe"
+      },
+      "health_timeout_ms": 10000
+    },
+    "web": {
+      "entry": "web/entry.js",
+      "styles": [
+        "web/style.css"
+      ]
+    }
+  },
+  "migrations": "migrations"
+}
